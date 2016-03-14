@@ -1,6 +1,15 @@
 #Noughts & Crosses
 ##Prerequsites
 ```
+npm install expect
+npm install mocha
 meteor add accounts-ui
 meteor add artwells:accounts-guest
+meteor add twbs:bootstrap
+meteor add react kadira:react-layout kadira:flow-router
 ```
+optionally helper tool to peek on MongoDB
+```
+meteor add msavin:mongol
+```
+
