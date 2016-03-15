@@ -10,11 +10,16 @@ User = React.createClass({
       currentUser: Meteor.user()
     }
   },
-  
 
   render(){
     return (
-      <div>User: {this.data.currentUser._id}</div>
+      <div><AccountsUIWrapper /></div>
     )
   }
+
+  // render(){
+  //   return (
+  //     <div>User: </div>
+  //   )
+  // }
 });

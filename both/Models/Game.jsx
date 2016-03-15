@@ -1,3 +1,5 @@
+// console.log("User.jsx: Użytkownik: " + Meteor.user()._id);
+
 Tables = new Mongo.Collection("tables");
 
 // var Schemas = {};
@@ -55,11 +57,6 @@ if (Meteor.isServer) {
 
 if (Meteor.isClient) {
 
-  if(!Meteor.userId()) {
-    console.log("Niezalogowany użytkownik. Wywołuję FlowRouter.go('/')");
-    FlowRouter.go('/');
-  }
-
   console.log("z isClient: ", Meteor.call('checkIfUserIsInTable', Meteor.userId(), function (error, result) {
     if (error) {
       console.log(error);
@@ -77,4 +74,9 @@ if (Meteor.isClient) {
   console.log("isInTable: " + isInTable);
   console.log("Użytkownik: " + Meteor.userId());
 
+  // if(!Meteor.userId()) {
+  //   console.log("Niezalogowany użytkownik. Wywołuję FlowRouter.go('/')");
+  //   FlowRouter.go('/');
+  // }
+  
 }
