@@ -1,4 +1,8 @@
-User = React.createClass ({
+
+
+//var assignedTable = assignedTable();
+
+User = React.createClass({
 
   mixins: [ReactMeteorData],
   getMeteorData(){
@@ -6,6 +10,7 @@ User = React.createClass ({
       currentUser: Meteor.user()
     }
   },
+  
 
   render(){
     return (

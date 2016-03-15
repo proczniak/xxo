@@ -1,8 +1,16 @@
 Table = React.createClass({
+  getCompetitors(number) {
+    return {
+
+    }
+  },
+
+  
+  
   render() {
     return (
       <div className="row">
-        Stół
+        <h4>Table: competitror1, competitor2</h4>
       </div>
     )
   }
