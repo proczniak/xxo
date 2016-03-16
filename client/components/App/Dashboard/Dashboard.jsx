@@ -11,12 +11,13 @@ Dashboard = React.createClass({
 
   render() {
     return (
-      <div className="navbar">
-        <div className="navbar-header">
+      <div className="panel panel-default">
+        <div className="panel-heading">
           Dashboard
         </div>
-        <div className="navbar-text">
+        <div className="panel-body">
           <User />
+          <Scores />
         </div>
       </div>
     )

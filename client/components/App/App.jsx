@@ -17,7 +17,7 @@ App = React.createClass({
   // },
 
   allowedLayout(){
-    var allowedLayouts = ['Login', 'Register'];
+    var allowedLayouts = ['Login'];
     var layoutAllowed = false;
     if ($.inArray(this.props.content.props.name, allowedLayouts) > -1 || this.data.loggedIn) {
       layoutAllowed = true;

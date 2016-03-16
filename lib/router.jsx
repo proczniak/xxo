@@ -22,15 +22,6 @@ FlowRouter.route('/Table', {
   }
 });
 
-// FlowRouter.route('/', {
-//   name: 'Dashboard',
-//   action() {
-//     ReactLayout.render(App, {
-//       content: <Dashboard name="Dashboard" />,
-//       nav: <Nav />
-//     });
-//   }
-// });
 
 FlowRouter.route('/login', {
   name: 'Login',
@@ -38,15 +29,6 @@ FlowRouter.route('/login', {
     ReactLayout.render(App, {
       content: <Login name="Login" />
 
-    });
-  }
-});
-
-FlowRouter.route('/register', {
-  name: 'Register',
-  action(){
-    ReactLayout.render(App, {
-      content: <Register name="Register" />
     });
   }
 });

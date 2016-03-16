@@ -24,6 +24,7 @@ Tables = new Mongo.Collection("tables");
 
 if (Meteor.isServer) {
   Meteor.methods({
+    
     createTable: function (competitor1, competitor2) {
       Tables.insert({
         competitor1: competitor1,

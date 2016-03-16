@@ -1,3 +1,9 @@
+/**
+ * Shameless snatch from meteor react todos (not to waste more time)
+ * https://www.meteor.com/tutorials/react/adding-user-accounts
+ */
+
+
 if (Meteor.isClient) {
   Accounts.ui.config({
     passwordSignupFields: "USERNAME_ONLY"

@@ -13,7 +13,10 @@ User = React.createClass({
 
   render(){
     return (
-      <div><AccountsUIWrapper /></div>
+      <div>
+        Logged as:&nbsp;
+        <AccountsUIWrapper />
+      </div>
     )
   }
 
