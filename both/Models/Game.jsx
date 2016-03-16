@@ -32,7 +32,7 @@ if (Meteor.isServer) {
       });
     },
 
-    checkIfUserIsInTable: function (user) {
+    checkIfUserIsOnBoard: function (user) {
       var result = Tables.find({competitor1: user}).count();
       return (result);
     },
@@ -58,7 +58,7 @@ if (Meteor.isServer) {
 
 if (Meteor.isClient) {
 
-  console.log("z isClient: ", Meteor.call('checkIfUserIsInTable', Meteor.userId(), function (error, result) {
+  console.log("z isClient: ", Meteor.call('checkIfUserIsOnBoard', Meteor.userId(), function (error, result) {
     if (error) {
       console.log(error);
     } else {

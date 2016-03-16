@@ -1,22 +1,22 @@
 // console.log("User.jsx: Użytkownik: " + Meteor.user()._id);
 
 FlowRouter.route('/', {
-  name: 'Table',
+  name: 'Board',
   action() {
-    Meteor.subscribe('tables');
+    Meteor.subscribe('boards');
     ReactLayout.render(App, {
-      content: <Table name="Table" />,
+      content: <Board name="Board" />,
       dashboard: <Dashboard />
     });
   }
 });
 
-FlowRouter.route('/Table', {
-  name: 'Table',
+FlowRouter.route('/Board', {
+  name: 'Board',
   action() {
-    Meteor.subscribe('tables');
+    Meteor.subscribe('boards');
     ReactLayout.render(App, {
-      content: <Table name="Table" />,
+      content: <Board name="Board" />,
       dashboard: <Dashboard />
     });
   }

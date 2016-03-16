@@ -1,6 +1,6 @@
 
 
-Table = React.createClass({
+Board = React.createClass({
   getCompetitors(number) {
     
     return {}
@@ -9,7 +9,7 @@ Table = React.createClass({
   render() {
     return (
       <div className="row">
-        <h4>Table: competitor1, competitor2</h4>
+        <h4>Board: competitor1, competitor2</h4>
         <table className="tab-content">
           <tbody>
           <tr>
