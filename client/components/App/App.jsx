@@ -3,8 +3,8 @@ App = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData(){ //assigns variables, objects (stuff) to this.props.data.property - (loggedIn)
     return {
-      loggedIn: !!Meteor.user(),
-      currentUser: Meteor.user()
+      loggedIn: !!Meteor.user()
+      //currentUser: Meteor.user()
     }
   },
 

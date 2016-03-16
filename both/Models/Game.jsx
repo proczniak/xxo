@@ -1,54 +1,54 @@
 // console.log("User.jsx: Użytkownik: " + Meteor.user()._id);
 
-Tables = new Mongo.Collection("tables");
+Boards = new Mongo.Collection("boards");
 
 // var Schemas = {};
 //
-// Schemas.Tables = new SimpleSchema({
+// Schemas.Boards = new SimpleSchema({
 //   _id: {
 //     type: String
 //   },
-//   competitor1: {
+//   player1: {
 //     type: String,
 //     label: "First Competitor"
 //   },
-//   competitor2: {
+//   player2: {
 //     type: String,
 //     label: "Second Competitor"
 //   }
 // });
 //
 //
-// Tables.attachSchema(Schemas.Tables);
-//
+// Boards.attachSchema(Schemas.Boards);
+
 
 if (Meteor.isServer) {
   Meteor.methods({
-    
-    createTable: function (competitor1, competitor2) {
-      Tables.insert({
-        competitor1: competitor1,
-        competitor2: null
-      });
+
+
+
+
+    checkIfBoardExists: function () {
+
     },
 
-    checkIfUserIsOnBoard: function (user) {
-      var result = Tables.find({competitor1: user}).count();
-      return (result);
-    },
+    createBoard: function () {
+    Boards.insert({
+      player1: this.userId
+    });
+  },
 
-    checkIfTableExists: function () {
-
-    }
   });
 
 
 
-  Meteor.publish("tables", function () {
-    return Tables.find({
+  Meteor.publish("boards", function () {
+    console.log("Game.jsx: username: " + this.userId);
+    return Boards.find(
+      {
         $or: [
-          {competitor1: this.userId},
-          {competitor2: this.userId}
+          {player1: this.userId},
+          {player2: this.userId}
         ]
       }
     )
@@ -58,26 +58,27 @@ if (Meteor.isServer) {
 
 if (Meteor.isClient) {
 
-  console.log("z isClient: ", Meteor.call('checkIfUserIsOnBoard', Meteor.userId(), function (error, result) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log(result);
-      Session.set('isInTable', result);
-      //return  (result);
-    }
-  })
-  );
+  // console.log("z isClient: ", Meteor.call('checkIfPlayerIsOnBoard', Meteor.userId(), function (error, result) {
+  //     if (error) {
+  //       console.log(error);
+  //     } else {
+  //       console.log(result);
+  //       Session.set('userIsOnBoard', result);
+  //       //return  (result);
+  //     }
+  //   })
+  // );
 
-  isInTable = Session.get("isInTable");
 
-  console.log("Z aplikacji: " + Tables.find().count()); // tak nie działa, ale Tables.find().count() z konsoli _PRZEGLĄDARKI_- jak najbardziej! WTF?
-  console.log("isInTable: " + isInTable);
+  if (!!Meteor.userId()) {
+   /**
+   * Assign the player (user) to a Board
+   */
+    console.log("Użytkownik zalogowany");
+  } else {
+    console.log("Użytkownik niezalogowany");
+  }
+
+  console.log("Plansze: " + Boards.find().count()); // tak nie działa, ale Tables.find().count() z konsoli _PRZEGLĄDARKI_- jak najbardziej! WTF?
   console.log("Użytkownik: " + Meteor.userId());
-
-  // if(!Meteor.userId()) {
-  //   console.log("Niezalogowany użytkownik. Wywołuję FlowRouter.go('/')");
-  //   FlowRouter.go('/');
-  // }
-  
 }
