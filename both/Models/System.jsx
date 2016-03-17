@@ -5,6 +5,12 @@
 
 
 if (Meteor.isClient) {
+  window.onbeforeunload = closingCode;
+  function closingCode(){
+    // do something...
+    Meteor.call("destroyBoard");
+  }
+
   Accounts.ui.config({
     passwordSignupFields: "USERNAME_ONLY"
   });

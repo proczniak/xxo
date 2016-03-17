@@ -1,5 +1,3 @@
-// console.log("User.jsx: Użytkownik: " + Meteor.user()._id);
-
 Boards = new Mongo.Collection("boards");
 
 // var Schemas = {};
@@ -21,29 +19,113 @@ Boards = new Mongo.Collection("boards");
 //
 // Boards.attachSchema(Schemas.Boards);
 
-
 if (Meteor.isServer) {
   Meteor.methods({
 
+    /**
+     * Very basic session (user - board) handling
+     */
+    assignMeToTheBoard: function () {
+      userid = Meteor.userId();
+      console.log("assignMeToTheBoard invoked, userid: " + userid);
 
+      /**
+       * Check if player has a board already assigned.
+       */
+      if (!!Meteor.call('checkIfPlayerAlreadyOnBoard')) {
+        /**
+         * Player has a board assigned we're done here. Lets return assigned board _id.
+         */
 
+        console.log('Znalazłem plansze: ' + playerBoard._id + ". SUKCES. Gracz jest na planszy. ");
+        return playerBoard._id;
+      }
+      else {
+        /**
+         * No board assigned to the player.
+         */
 
-    checkIfBoardExists: function () {
+        console.log('Nie znalazłem planszy z przypisanym użytkownikiem: ' + this.userId +
+          '\n Sprawdzam czy są juz jakieś plansze z przypisanym innym użytkownikiem.');
+
+        /**
+         * Let's check if there are any other players awaiting for game to start.
+         * (Boards with only one player assigned)
+         */
+        if (!!Meteor.call('checkForAvailableBoards')) {
+          /**
+           * Board with only one player already assigned FOUND. Let's hook up!
+           */
+          console.log('Znalazłem planszę z innym użytkownikiem. Podłączam się do planszy: '+ availableBoard._id);
+
+          Boards.update(
+            {_id: availableBoard._id},
+            {
+              $set: {player2: Meteor.userId()}
+            }
+          );
+
+        }
+        else {
+          /**
+           * No other player waiting found. Let's create a Board and assign our Player to it.
+           */
+          console.log('Nie znalazłem wolnej planszy. Tworzę planszę.');
+          Meteor.call('createBoard');
+        }
+      }
 
     },
 
+    checkIfPlayerAlreadyOnBoard: function () {
+      console.log('checkIfPlayerAlreadyOnBoard invoked.');
+      playerBoard = Boards.findOne(
+        {
+          $or: [
+            {player1: this.userId},
+            {player2: this.userId}
+          ]
+        }
+      );
+      if (!!playerBoard) {
+        console.log('checkIfPlayerAlreadyOnBoard, playerBoard._id: ' + playerBoard._id);
+        return playerBoard._id;
+      }
+    },
+
+    checkForAvailableBoards: function () {
+      console.log("checkForAvailableBoards invoked, user: " + Meteor.user().username);
+      //  var result = Boards.find({player2: null})._id;
+      availableBoard = Boards.findOne({
+        $and: [
+          {player1: {$ne: null}},
+          {player2: null}
+        ]
+      });
+
+      if (!!availableBoard) {
+        console.log('checkForAvailableBoards found: ' + availableBoard._id)
+        return availableBoard._id;
+      }
+      else return false;
+    },
+
     createBoard: function () {
-    Boards.insert({
-      player1: this.userId
-    });
-  },
+      console.log("createBoard invoked, user: " + Meteor.userId());
+
+      Boards.insert({
+        player1: this.userId
+      });
+    },
+
+    destroyBoard: function () {
+      console.log("destroyBoard: Gracz zamknął przeglądarkę. Musimy posprzątać");
+    }
 
   });
 
-
-
   Meteor.publish("boards", function () {
-    console.log("Game.jsx: username: " + this.userId);
+    console.log("Game.jsx: Publikuję kolekcję bards z player1 lub player2: " + this.userId);
     return Boards.find(
       {
         $or: [
@@ -71,9 +153,9 @@ if (Meteor.isClient) {
 
 
   if (!!Meteor.userId()) {
-   /**
-   * Assign the player (user) to a Board
-   */
+    /**   2016.03.16 WTF?
+     * Assign the player (user) to a Board
+     */
     console.log("Użytkownik zalogowany");
   } else {
     console.log("Użytkownik niezalogowany");

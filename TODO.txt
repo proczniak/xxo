@@ -1,0 +1,4 @@
+skończyłem na zrobieniu metody do tworzenia planszy na serwerze.
+dalej dodawanie juzka do istniejącej planszy
+
+createBoard - in progress
