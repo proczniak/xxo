@@ -1,4 +1,3 @@
-skończyłem na zrobieniu metody do tworzenia planszy na serwerze.
-dalej dodawanie juzka do istniejącej planszy
+Sprzątanie po zakończonych grach i wylogowanych i uciekniętych juzkach.
+Sama gra.
 
-createBoard - in progress
