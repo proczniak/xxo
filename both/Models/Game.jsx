@@ -56,14 +56,16 @@ if (Meteor.isServer) {
           /**
            * Board with only one player already assigned FOUND. Let's hook up!
            */
-          console.log('Znalazłem planszę z innym użytkownikiem. Podłączam się do planszy: '+ availableBoard._id);
+          console.log('Znalazłem planszę z innym użytkownikiem. Podłączam się do planszy: ' + availableBoard._id);
 
           Boards.update(
             {_id: availableBoard._id},
             {
-              $set: {player2: Meteor.userId()}
-            }
-          );
+              $set: {
+                player2: Meteor.userId(),
+                p2Name: Meteor.user().username
+              }
+            });
 
         }
         else {
@@ -114,8 +116,26 @@ if (Meteor.isServer) {
       console.log("createBoard invoked, user: " + Meteor.userId());
 
       Boards.insert({
-        player1: this.userId
+        player1: this.userId,
+        p1Name: Meteor.user().username
       });
+    },
+
+    playerMove: function (field) {
+
+      var boardId = Meteor.call('checkIfPlayerAlreadyOnBoard');
+      console.log("Gracz: " + Meteor.user().username + " wykonał ruch na polu: " + field);
+      //var updateData = {field + ": " + Meteor.user().username};
+      //console.log("boardId: " + boardId + "updateData: " + updateData);
+      Boards.update(
+        {_id: boardId},
+        {
+          $set: {
+            [field]: Meteor.user().username
+          }
+
+        }
+      );
     },
 
     destroyBoard: function () {
@@ -125,7 +145,7 @@ if (Meteor.isServer) {
   });
 
   Meteor.publish("boards", function () {
-    console.log("Game.jsx: Publikuję kolekcję bards z player1 lub player2: " + this.userId);
+    console.log("Game.jsx: Publikuję kolekcję boards z player1 lub player2: " + this.userId);
     return Boards.find(
       {
         $or: [
@@ -135,22 +155,12 @@ if (Meteor.isServer) {
       }
     )
   });
+
+
 }
 
 
 if (Meteor.isClient) {
-
-  // console.log("z isClient: ", Meteor.call('checkIfPlayerIsOnBoard', Meteor.userId(), function (error, result) {
-  //     if (error) {
-  //       console.log(error);
-  //     } else {
-  //       console.log(result);
-  //       Session.set('userIsOnBoard', result);
-  //       //return  (result);
-  //     }
-  //   })
-  // );
-
 
   if (!!Meteor.userId()) {
     /**   2016.03.16 WTF?

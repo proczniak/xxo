@@ -1,31 +1,40 @@
-//Meteor.subscribe('boards');
 Board = React.createClass({
 
   mixins: [ReactMeteorData],
   getMeteorData(){
     Meteor.subscribe('boards');
-    // var boardIdTmp = Boards.findOne({
+    // var boardData = Boards.findOne({
     //   $or: [
     //     {player1: this.userId},
     //     {player2: this.userId}
     //   ]
     // });
 
-    var boardIdTmp = Boards.findOne();
+    var boardData = Boards.findOne();
 
-    if (!!boardIdTmp) {
+    if (!!boardData) {
       return {
-        boardId: boardIdTmp._id
+        boardId: boardData._id,
+        opponent: this.getOpponentName(boardData)
       }
     }
     else {
-      return{
+      return {
         boardId: "none"
       }
     }
   },
 
-
+  // makeMove: function (field) {
+  //   console.log("Użytkownik: " + Meteor.user().username + " kliknął w pole: " + this.field);
+  //   Meteor.call('playerMove', this.field);
+  // },
+  
+  getOpponentName: function (boardData) {
+    console.log('getOpponenName invoked, this.userId: ' + Meteor.userId());
+    if (boardData.player1 === Meteor.userId()) return boardData.p2Name
+    else return boardData.p1Name
+  },
 
   componentWillMount(){
     console.log("componentWillMount, użytkownik: " + Meteor.user().username + " o _id: " + Meteor.userId());
@@ -38,23 +47,42 @@ Board = React.createClass({
       <div className="row">
         <h2>boardId: {this.data.boardId}</h2>
         <h3>userId: {Meteor.userId()}</h3>
-        <h4>Board: {Meteor.user().username}, competitor2</h4>
+        <h4>Players: {Meteor.user().username}, {this.data.opponent}</h4>
+        <h3>Grasz z użytkownikiem: {this.data.opponent}</h3>
         <table className="tab-content">
           <tbody>
           <tr>
-            <td id="A1">A1</td>
-            <td id="A2">A2</td>
-            <td id="A3">A3</td>
+            <td id="A1">
+              <BoardField fieldId="A1" />
+            </td>
+            <td id="A2">
+              <BoardField fieldId="A2" />
+            </td>
+            <td id="A3">
+              <BoardField fieldId="A3" />
+            </td>
           </tr>
           <tr>
-            <td id="B1">B1</td>
-            <td id="B2">B2</td>
-            <td id="B3">B3</td>
+            <td id="B1">
+              <BoardField fieldId="B1" />
+            </td>
+            <td id="B2">
+              <BoardField fieldId="B2" />
+            </td>
+            <td id="B3">
+              <BoardField fieldId="B3" />
+            </td>
           </tr>
           <tr>
-            <td id="C1">C1</td>
-            <td id="C2">C2</td>
-            <td id="C3">C3</td>
+            <td id="C1">
+              <BoardField fieldId="C1" />
+            </td>
+            <td id="C2">
+              <BoardField fieldId="C2" />
+            </td>
+            <td id="C3">
+              <BoardField fieldId="C3" />
+            </td>
           </tr>
           </tbody>
         </table>
