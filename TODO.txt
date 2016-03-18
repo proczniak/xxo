@@ -1,3 +1,7 @@
 Sprzątanie po zakończonych grach i wylogowanych i uciekniętych juzkach.
-Sama gra.
-
+Logika gry:
+blokowanie klikniętych pól (warunek w metodzie playerMove)
+cos sie pierdoli przy nizainicjowanym stole (potrzeba kilku refreshy zanim poprawnie wyrenderuje sie <Board />
+zepsuło się gdy podpiąłem <BoardField /> pewnie od nulli w propsach czy innych subskrypcjach.
+Muszę wyrzucić wpinanie się w planszę z <Board /> gdzieś wcześniej. Albo upewnić się że sesja jest gotowa 
+przed renderem <Board />
