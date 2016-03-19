@@ -2,3 +2,30 @@
     font-size: xx-large;
     opacity: 50%;
 }
+
+#A1, #B1, #A2, #B2 {
+    border-right-style: solid;
+    border-bottom-style: solid;
+}
+#B3, #C3 {
+    border-top-style: solid;
+}
+
+#C1, #C2 {
+    border-right-style: solid;
+}
+
+
+.nought, .cross, .empty {
+    height: 75px;
+    width: 75px;
+
+}
+
+.nought {
+    background-image: url("images/xxo.nought.png");
+}
+
+.cross {
+    background-image: url("images/xxo.cross.png");
+}

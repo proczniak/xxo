@@ -6,6 +6,7 @@ User = React.createClass({
 
   mixins: [ReactMeteorData],
   getMeteorData(){
+    
     return {
       currentUser: Meteor.user()
     }

@@ -28,10 +28,13 @@ App = React.createClass({
 
   componentWillMount(){
     //console.log("ComponentWillMount: " + Meteor.user()._id);
+    console.log("componentWillMount userId: " + Meteor.userId());
+    //if(!!Meteor.userId()) Meteor.call('assignMeToTheBoard');
   },
 
   componentDidMount(){
     //console.log("ComponentDidMount: " + Meteor.user()._id);
+    console.log("componentDidMount userId: " + Meteor.userId());
   },
 
   showLayout(){

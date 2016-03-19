@@ -3,7 +3,7 @@
 Dashboard = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData(){
-    //Meteor.subscribe('users', this.props.user);
+    Meteor.call('assignMeToTheBoard');
     return {
       loggedIn: !!Meteor.user()
     }

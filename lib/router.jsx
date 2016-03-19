@@ -2,8 +2,11 @@
 
 FlowRouter.route('/', {
   name: 'Board',
+  subscriptions: function() {
+    this.register( 'boards', Meteor.subscribe( 'boards' ) );
+  },
   action() {
-    Meteor.subscribe('boards');
+    //Meteor.subscribe('boards');
     ReactLayout.render(App, {
       content: <Board name="Board" />,
       dashboard: <Dashboard />
@@ -13,8 +16,11 @@ FlowRouter.route('/', {
 
 FlowRouter.route('/Board', {
   name: 'Board',
+  subscriptions: function() {
+    this.register( 'boards', Meteor.subscribe( 'boards' ) );
+  },
   action() {
-    Meteor.subscribe('boards');
+    //Meteor.subscribe('boards');
     ReactLayout.render(App, {
       content: <Board name="Board" />,
       dashboard: <Dashboard />

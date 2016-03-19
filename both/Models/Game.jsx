@@ -118,15 +118,28 @@ if (Meteor.isServer) {
       Boards.insert({
         player1: this.userId,
         p1Name: Meteor.user().username
+        // A1: "empty",
+        // A2: "empty",
+        // A3: "empty",
+        // B1: "empty",
+        // B2: "empty",
+        // B3: "empty",
+        // C1: "empty",
+        // C2: "empty",
+        // C3: "empty"
       });
+      Meteor.publish('boards');
+      //FlowRouter.go('/Board');
     },
 
     playerMove: function (field) {
 
       var boardId = Meteor.call('checkIfPlayerAlreadyOnBoard');
-      console.log("Gracz: " + Meteor.user().username + " wykonał ruch na polu: " + field);
+      console.log("Gracz: " + Meteor.user().username + " wykonał ruch na polu: " + field + "wartość pola: ");
       //var updateData = {field + ": " + Meteor.user().username};
       //console.log("boardId: " + boardId + "updateData: " + updateData);
+
+
       Boards.update(
         {_id: boardId},
         {
