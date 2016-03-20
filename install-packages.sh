@@ -1,24 +1,4 @@
 npm install expect
 npm install mocha
-meteor add accounts-password
-meteor add accounts-ui
-meteor add aldeed:collection2
-meteor add blaze-html-templates
-meteor add dburles:collection-helpers
-meteor add ecmascript
-meteor add es5-shim
-meteor add jquery
-meteor add juliancwirko:s-alert
-meteor add juliancwirko:s-alert-genie
-meteor add kadira:flow-router
-meteor add kadira:react-layout
-meteor add meteor-base
-meteor add mobile-experience
-meteor add mongo
-meteor add msavin:mongol
-meteor add ongoworks:security
-meteor add react
-meteor add session
-meteor add standard-minifiers
-meteor add tracker
-meteor add twbs:bootstrap
+meteor add accounts-password accounts-ui aldeed:collection2 blaze-html-templates dburles:collection-helpersecmascript es5-shim jquery juliancwirko:s-alert juliancwirko:s-alert-genie kadira:flow-router kadira:react-layout meteor-base mobile-experience mongo msavin:mongol ongoworks:security react session standard-minifiers tracker twbs:bootstrap
+meteor remove autopublish insecure

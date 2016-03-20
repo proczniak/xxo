@@ -1,24 +1,5 @@
 Boards = new Mongo.Collection("boards");
 
-// var Schemas = {};
-//
-// Schemas.Boards = new SimpleSchema({
-//   _id: {
-//     type: String
-//   },
-//   player1: {
-//     type: String,
-//     label: "First Competitor"
-//   },
-//   player2: {
-//     type: String,
-//     label: "Second Competitor"
-//   }
-// });
-//
-//
-// Boards.attachSchema(Schemas.Boards);
-
 if (Meteor.isServer) {
   Meteor.methods({
 
@@ -27,28 +8,19 @@ if (Meteor.isServer) {
      */
     assignMeToTheBoard: function () {
       userid = Meteor.userId();
-      console.log("assignMeToTheBoard invoked, userid: " + userid);
-
+      //console.log("assignMeToTheBoard invoked, userid: " + userid);
       /**
        * Check if player has a board already assigned.
        */
-      if (!!Meteor.call('checkIfPlayerAlreadyOnBoard')) {
+      if (!!Meteor.call('getPlayerBoardId')) {
         /**
          * Player has a board assigned we're done here. Lets return assigned board _id.
          */
-
-        console.log('Znalazłem plansze: ' + playerBoard._id + ". SUKCES. Gracz jest na planszy. ");
         return playerBoard._id;
       }
       else {
         /**
          * No board assigned to the player.
-         */
-
-        console.log('Nie znalazłem planszy z przypisanym użytkownikiem: ' + this.userId +
-          '\n Sprawdzam czy są juz jakieś plansze z przypisanym innym użytkownikiem.');
-
-        /**
          * Let's check if there are any other players awaiting for game to start.
          * (Boards with only one player assigned)
          */
@@ -56,8 +28,6 @@ if (Meteor.isServer) {
           /**
            * Board with only one player already assigned FOUND. Let's hook up!
            */
-          console.log('Znalazłem planszę z innym użytkownikiem. Podłączam się do planszy: ' + availableBoard._id);
-
           Boards.update(
             {_id: availableBoard._id},
             {
@@ -66,21 +36,19 @@ if (Meteor.isServer) {
                 p2Name: Meteor.user().username
               }
             });
-
         }
         else {
           /**
            * No other player waiting found. Let's create a Board and assign our Player to it.
            */
-          console.log('Nie znalazłem wolnej planszy. Tworzę planszę.');
           Meteor.call('createBoard');
         }
       }
 
     },
 
-    checkIfPlayerAlreadyOnBoard: function () {
-      console.log('checkIfPlayerAlreadyOnBoard invoked.');
+    getPlayerBoardId: function () {
+      // console.log('getPlayerBoardId invoked.');
       playerBoard = Boards.findOne(
         {
           $or: [
@@ -90,14 +58,13 @@ if (Meteor.isServer) {
         }
       );
       if (!!playerBoard) {
-        console.log('checkIfPlayerAlreadyOnBoard, playerBoard._id: ' + playerBoard._id);
+        //console.log('getPlayerBoardId, playerBoard._id: ' + playerBoard._id);
         return playerBoard._id;
       }
     },
 
     checkForAvailableBoards: function () {
-      console.log("checkForAvailableBoards invoked, user: " + Meteor.user().username);
-      //  var result = Boards.find({player2: null})._id;
+      //console.log("checkForAvailableBoards invoked, user: " + Meteor.user().username);
       availableBoard = Boards.findOne({
         $and: [
           {player1: {$ne: null}},
@@ -106,54 +73,111 @@ if (Meteor.isServer) {
       });
 
       if (!!availableBoard) {
-        console.log('checkForAvailableBoards found: ' + availableBoard._id)
+        //console.log('checkForAvailableBoards found: ' + availableBoard._id)
         return availableBoard._id;
       }
       else return false;
     },
 
     createBoard: function () {
-      console.log("createBoard invoked, user: " + Meteor.userId());
-
       Boards.insert({
         player1: this.userId,
-        p1Name: Meteor.user().username
-        // A1: "empty",
-        // A2: "empty",
-        // A3: "empty",
-        // B1: "empty",
-        // B2: "empty",
-        // B3: "empty",
-        // C1: "empty",
-        // C2: "empty",
-        // C3: "empty"
+        p1Name: Meteor.user().username,
+        moveToken: Meteor.userId()
       });
-      Meteor.publish('boards');
-      //FlowRouter.go('/Board');
     },
 
-    playerMove: function (field) {
+    destroyBoard: function (boardId) {
+      console.log("niszczę planszę.");
+      Boards.remove({_id: boardId})
+    },
 
-      var boardId = Meteor.call('checkIfPlayerAlreadyOnBoard');
-      console.log("Gracz: " + Meteor.user().username + " wykonał ruch na polu: " + field + "wartość pola: ");
-      //var updateData = {field + ": " + Meteor.user().username};
-      //console.log("boardId: " + boardId + "updateData: " + updateData);
-
-
+    // Boards.update(
+    // {_id: availableBoard._id},
+    // {
+    //   $set: {
+    //     player2: Meteor.userId(),
+    //     p2Name: Meteor.user().username
+    //   }
+    // });
+    //
+    clearBoard: function () {
       Boards.update(
-        {_id: boardId},
+        {_id: Meteor.call('getPlayerBoardId')},
         {
-          $set: {
-            [field]: Meteor.user().username
+          $unset: {
+            A1: null, A2: null, A3: null,
+            B1: null, B2: null, B3: null,
+            C1: null, C2: null, C3: null
           }
-
         }
       );
     },
 
-    destroyBoard: function () {
-      console.log("destroyBoard: Gracz zamknął przeglądarkę. Musimy posprzątać");
+
+    playerMove: function (field) {
+
+      getFieldContent = function (fieldId) {
+        gameFieldObj1 = Boards.find(
+          {
+            $or: [
+              {player1: Meteor.userId()},
+              {player2: Meteor.userId()}
+            ]
+          },
+          {
+            fields: {
+              [fieldId]: 1
+            }
+          }
+        ).fetch();
+
+        /**
+         * Blob found on stackoverflow to cope with bad data handling design.
+         * Might be fixed with moving game (board, fields) data to related collection.
+         */
+        var fields = Object.keys(gameFieldObj1).map(function (k) {
+          return gameFieldObj1[k]
+        })
+        var field = fields[0];
+
+        //console.log("Meteor.userId(): "+Meteor.userId()+"Obiekt myObj: " + myObj + ", Obiekt field: " + field);
+        if (!!field) {
+          var fields2 = Object.keys(field).map(function (k) {
+            return field[k]
+          });
+        }
+
+        var field2 = fields2[1];
+        return field2;
+      };
+
+      getGameData = function (boardId) {
+        var boardData = Boards.findOne({_id: boardId});
+        if (boardData.player1 === Meteor.userId()) opId = boardData.player2
+        else opId = boardData.player1
+        return ({
+          opponentId: opId,
+          playerWithMoveToken: boardData.moveToken
+        })
+      };
+
+      var boardId = Meteor.call('getPlayerBoardId');
+
+      if (!getFieldContent(field) && Meteor.userId() === getGameData(boardId).playerWithMoveToken) {
+        Boards.update(
+          {_id: boardId},
+          {
+            $set: {
+              [field]: Meteor.user().username,
+              moveToken: getGameData(boardId).opponentId
+            }
+
+          }
+        );
+      }
     }
+
 
   });
 
@@ -170,20 +194,4 @@ if (Meteor.isServer) {
   });
 
 
-}
-
-
-if (Meteor.isClient) {
-
-  if (!!Meteor.userId()) {
-    /**   2016.03.16 WTF?
-     * Assign the player (user) to a Board
-     */
-    console.log("Użytkownik zalogowany");
-  } else {
-    console.log("Użytkownik niezalogowany");
-  }
-
-  console.log("Plansze: " + Boards.find().count()); // tak nie działa, ale Tables.find().count() z konsoli _PRZEGLĄDARKI_- jak najbardziej! WTF?
-  console.log("Użytkownik: " + Meteor.userId());
 }

@@ -6,7 +6,6 @@ FlowRouter.route('/', {
     this.register( 'boards', Meteor.subscribe( 'boards' ) );
   },
   action() {
-    //Meteor.subscribe('boards');
     ReactLayout.render(App, {
       content: <Board name="Board" />,
       dashboard: <Dashboard />
@@ -20,7 +19,6 @@ FlowRouter.route('/Board', {
     this.register( 'boards', Meteor.subscribe( 'boards' ) );
   },
   action() {
-    //Meteor.subscribe('boards');
     ReactLayout.render(App, {
       content: <Board name="Board" />,
       dashboard: <Dashboard />

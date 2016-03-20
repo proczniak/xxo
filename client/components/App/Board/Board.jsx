@@ -3,22 +3,18 @@ Board = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData(){
 
-    Meteor.call('assignMeToTheBoard');
-
     var boardData = Boards.findOne();
 
-
-    console.log('Board.jsx. getMeteorData var boardData: ' + boardData);
+ //   console.log('Board.jsx. getMeteorData var boardData: ' + boardData);
 
     if (!!boardData) {
       return {
         boardId: boardData._id,
-        opponent: this.getOpponentName(boardData)
+        opponent: this.getOpponentName(boardData),
+        moveToken: boardData.moveToken
       }
     }
     else {
-
-   //   Meteor.call('assignMeToTheBoard');
       return {
         boardId: "none",
         opponent: "none yet"
@@ -28,33 +24,42 @@ Board = React.createClass({
 
 
   getOpponentName: function (boardData) {
-    console.log('getOpponenName invoked, this.userId: ' + Meteor.userId());
+ //   console.log('getOpponenName invoked, this.userId: ' + Meteor.userId());
     if (boardData.player1 === Meteor.userId()) return boardData.p2Name
     else return boardData.p1Name
   },
 
-  componentWillMount(){
-    console.log("componentWillMount, użytkownik: " + Meteor.user().username + " o _id: " + Meteor.userId());
-
+  handleClearBoardClick: function (event) {
+    Meteor.call('clearBoard', this.props.fieldId);
   },
 
   render() {
+
+    if (this.data.moveToken === Meteor.userId()) var moveTokenMsg = "Twój ruch"
+    else var moveTokenMsg = "Ruch przeciwnika"
+
+    console.log("moveToken: " +this.data.moveToken);
 
     if (this.data.boardId != "none") {
       /** Ugly hack but without it component renders
        * without necessary data and fails at mapping parameters needed to retrieve the content of
        * game fields.
        * Spent way too much time to isolate the problem and have no time to solve
-       * it proper way.
+       * it pretty way.
        */
 
       console.log("this.data.boardId: " +this.data.boardId);
+
       return (
         <div className="row">
           <h2>boardId: {this.data.boardId}</h2>
           <h3>userId: {Meteor.userId()}</h3>
           <h4>Players: {Meteor.user().username}, {this.data.opponent}</h4>
           <h3>Grasz z użytkownikiem: {this.data.opponent}</h3>
+          <h3>{moveTokenMsg}</h3>
+          <input type="button" onClick={this.handleClearBoardClick} value="Wipe the board"></input>
+          <br />
+          <br />
           <table className="tab-content">
             <tbody>
             <tr>

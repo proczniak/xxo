@@ -4,17 +4,8 @@ App = React.createClass({
   getMeteorData(){ //assigns variables, objects (stuff) to this.props.data.property - (loggedIn)
     return {
       loggedIn: !!Meteor.user()
-      //currentUser: Meteor.user()
     }
   },
-
-  // getMeteorData(){
-  //
-  //   return {
-  //
-  //     currentUser: Meteor.user()
-  //   }
-  // },
 
   allowedLayout(){
     var allowedLayouts = ['Login'];
@@ -26,16 +17,16 @@ App = React.createClass({
     return layoutAllowed;
   },
 
-  componentWillMount(){
-    //console.log("ComponentWillMount: " + Meteor.user()._id);
-    console.log("componentWillMount userId: " + Meteor.userId());
-    //if(!!Meteor.userId()) Meteor.call('assignMeToTheBoard');
-  },
-
-  componentDidMount(){
-    //console.log("ComponentDidMount: " + Meteor.user()._id);
-    console.log("componentDidMount userId: " + Meteor.userId());
-  },
+  // componentWillMount(){
+  //   //console.log("ComponentWillMount: " + Meteor.user()._id);
+  //   console.log("componentWillMount userId: " + Meteor.userId());
+  //   //if(!!Meteor.userId()) Meteor.call('assignMeToTheBoard');
+  // },
+  //
+  // componentDidMount(){
+  //   //console.log("ComponentDidMount: " + Meteor.user()._id);
+  //   console.log("componentDidMount userId: " + Meteor.userId());
+  // },
 
   showLayout(){
 
@@ -65,25 +56,7 @@ App = React.createClass({
       </div>
     )
   },
-
-  /*
-   render()
-   {
-   return (
-   <div className="container">
-   <div className="row">
-   <div className="col-xs-3">
-   {this.props.dashboard}
-   </div>
-   <div className="col-xs-9">
-   {this.props.table}
-   </div>
-   </div>
-   </div>
-   )
-   }
-   */
-
+  
   render()
   {
     return (
@@ -94,7 +67,6 @@ App = React.createClass({
       </div>
     )
   }
-
 
 });
 

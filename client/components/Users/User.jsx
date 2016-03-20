@@ -4,13 +4,12 @@
 
 User = React.createClass({
 
-  mixins: [ReactMeteorData],
-  getMeteorData(){
-    
-    return {
-      currentUser: Meteor.user()
-    }
-  },
+  // mixins: [ReactMeteorData],
+  // getMeteorData(){
+  //   return {
+  //     currentUser: Meteor.user()
+  //   }
+  // },
 
   render(){
     return (
@@ -20,10 +19,4 @@ User = React.createClass({
       </div>
     )
   }
-
-  // render(){
-  //   return (
-  //     <div>User: </div>
-  //   )
-  // }
 });
