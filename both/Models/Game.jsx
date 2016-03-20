@@ -91,16 +91,7 @@ if (Meteor.isServer) {
       console.log("niszczę planszę.");
       Boards.remove({_id: boardId})
     },
-
-    // Boards.update(
-    // {_id: availableBoard._id},
-    // {
-    //   $set: {
-    //     player2: Meteor.userId(),
-    //     p2Name: Meteor.user().username
-    //   }
-    // });
-    //
+    
     clearBoard: function () {
       Boards.update(
         {_id: Meteor.call('getPlayerBoardId')},
@@ -108,7 +99,7 @@ if (Meteor.isServer) {
           $unset: {
             A1: null, A2: null, A3: null,
             B1: null, B2: null, B3: null,
-            C1: null, C2: null, C3: null
+            C1: null, C2: null, C3: null, gameResult: null
           }
         }
       );
@@ -162,20 +153,85 @@ if (Meteor.isServer) {
         })
       };
 
+      checkGameResult = function () {
+        /** function returns:
+         * undefined - when game is still in progress
+         * draw - when game result is draw
+         * winner Id - when current player actually won.
+         *
+         * Also function handles locking the game after it's finished
+         */
+
+        bS = Boards.findOne({_id: boardId});
+        /** bS stands for boardState */
+
+        if (
+          ((bS.A1 === bS.A2 && bS.A2 === bS.A3) && !!bS.A1) ||
+          ((bS.B1 === bS.B2 && bS.B2 === bS.B3) && !!bS.B1) ||
+          ((bS.C1 === bS.C2 && bS.C2 === bS.C3) && !!bS.C1) ||
+
+          ((bS.A1 === bS.B1 && bS.B1 === bS.C1) && !!bS.A1) ||
+          ((bS.A2 === bS.B2 && bS.B2 === bS.C2) && !!bS.A2) ||
+          ((bS.A3 === bS.B3 && bS.B3 === bS.C3) && !!bS.A3) ||
+
+          ((bS.A1 === bS.B2 && bS.B2 === bS.C3) && !!bS.A1) ||
+          ((bS.C1 === bS.B2 && bS.B2 === bS.A3) && !!bS.A3)
+        )
+        {
+          if(!bS.gameResult) {
+            Boards.update(
+              {_id: boardId},
+              {
+                $set: {
+                  gameResult: Meteor.userId()
+                }
+              }
+            )
+          }
+
+        } else if (
+          !!bS.A1 && !!bS.A2 && !!bS.A3 & !!bS.B1 && !!bS.B2 && !!bS.B3 & !!bS.C1 && !!bS.C2 && !!bS.C3) {
+          Boards.update(
+            {_id: boardId},
+            {
+              $set: {
+                gameResult: "draw"
+              }
+            }
+          )
+        }
+        bS = Boards.findOne({_id: boardId});
+        return bS.gameResult
+      };
+
       var boardId = Meteor.call('getPlayerBoardId');
 
+      /**
+       * Check if move allowed (field empty and token on player side) then
+       * make the move
+       */
       if (!getFieldContent(field) && Meteor.userId() === getGameData(boardId).playerWithMoveToken) {
-        Boards.update(
-          {_id: boardId},
-          {
-            $set: {
-              [field]: Meteor.user().username,
-              moveToken: getGameData(boardId).opponentId
+        if (!checkGameResult()) {
+          console.log("playerMove: no result yet");
+          Boards.update(
+            {_id: boardId},
+            {
+              $set: {
+                [field]: Meteor.user().username,
+                moveToken: getGameData(boardId).opponentId
+              }
             }
-
-          }
-        );
+          )
+        }
+        // if (checkGameResult() == "draw") {
+        //       console.log("playerMove, we got a:  " + checkGameResult());
+        //
+        // } else if (checkGameResult() && checkGameResult() != "draw"){
+        //        console.log("playerMove, we got winner: " + checkGameResult())
+        // }
       }
+      console.log("move not allowed area, Result: " + checkGameResult());
+      return checkGameResult();
     }
 
 

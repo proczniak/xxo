@@ -3,15 +3,20 @@ Board = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData(){
 
-    var boardData = Boards.findOne();
+    var bD = Boards.findOne(); /** bD stands for boardData */
+
+    if (bD.A1 || bD.A2 || bD.A3 || bD.B1 || bD.B2 || bD.B3 || bD.C1 || bD.C2 || bD.C3) boardClear = false;
+    else boardClear = true;
 
  //   console.log('Board.jsx. getMeteorData var boardData: ' + boardData);
 
-    if (!!boardData) {
+
+    if (!!bD) {
       return {
-        boardId: boardData._id,
-        opponent: this.getOpponentName(boardData),
-        moveToken: boardData.moveToken
+        boardId: bD._id,
+        opponent: this.getOpponentName(bD),
+        moveToken: bD.moveToken,
+        boardClear: boardClear
       }
     }
     else {
@@ -21,7 +26,16 @@ Board = React.createClass({
       }
     }
   },
+  getInitialState: function() {
+    return {boardCleared: false};
+  },
+  componentDidMount: function(){
 
+  },
+
+  componentDidUpdate: function(){
+    if (this.data.boardClear) sAlert.warning("Board cleared", {effect: 'genie'});
+  },
 
   getOpponentName: function (boardData) {
  //   console.log('getOpponenName invoked, this.userId: ' + Meteor.userId());
@@ -30,7 +44,8 @@ Board = React.createClass({
   },
 
   handleClearBoardClick: function (event) {
-    Meteor.call('clearBoard', this.props.fieldId);
+    Meteor.call('clearBoard');
+    this.setState({boardCleared: true});
   },
 
   render() {
@@ -57,7 +72,7 @@ Board = React.createClass({
           <h4>Players: {Meteor.user().username}, {this.data.opponent}</h4>
           <h3>Grasz z użytkownikiem: {this.data.opponent}</h3>
           <h3>{moveTokenMsg}</h3>
-          <input type="button" onClick={this.handleClearBoardClick} value="Wipe the board"></input>
+          <input type="button" className="btn-wipe-board" onClick={this.handleClearBoardClick} value="Wipe the board"></input>
           <br />
           <br />
           <table className="tab-content">

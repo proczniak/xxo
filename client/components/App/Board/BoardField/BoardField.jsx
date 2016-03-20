@@ -30,26 +30,45 @@ BoardField = React.createClass({
       var field2 = fields2[0];
 
     }
-    else var field2 = "empty"
-
-    //console.log("BoardField. getMeteorData. zaraz przed return. field2: " + field2 + ", fieldId: " + this.props.fieldId);
 
     return {
       fieldContent: field2
+
     }
 
 
+  },
+  getInitialState: function() {
+    return {fieldShouldUpdate: false};
   },
 
   handleClick: function (event) {
     Meteor.call('playerMove', this.props.fieldId);
   },
 
+  shouldComponentUpdate: function(){
+    if (this.state.fieldShouldUpdate === true) return true
+    else return false
+    /**
+     * NO IDEA WHY THIS WORKS!!!??? WTF?
+     */
+  },
+
+  componentDidUpdate: function(){
+    //console.log(Meteor.user().username +" "+ this.data.fieldContent);
+    if (this.data.fieldContent) {
+      if (Meteor.user().username != this.data.fieldContent) {
+        sAlert.info("Gracz " + this.data.fieldContent + " wykonał ruch", {effect: 'genie'});
+      }
+    }
+  },
+
   render()
   {
 
     if (this.data.fieldContent === Meteor.user().username) var fieldClass = "cross"
-    else if (this.data.fieldContent === "empty") var fieldClass = "empty"
+//    else if (this.data.fieldContent === "empty") var fieldClass = "empty"
+    else if (!this.data.fieldContent) var fieldClass = "empty"
     else var fieldClass = "nought"
 
 
@@ -61,5 +80,3 @@ BoardField = React.createClass({
     )
   }
 });
-
-//<div className="xo glyphicon glyphicon-remove">
