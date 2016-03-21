@@ -100,7 +100,6 @@ Board = React.createClass({
     }
 
     else {
-      console.log('Board.jsx, Brak this.data.boardId');
       return (<div>Someone must have picked the matrix. Please hit refresh to get back onboard.</div>)
 
     }

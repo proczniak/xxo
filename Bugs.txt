@@ -8,9 +8,21 @@
  dodać kilka pokracznych warunków na obsługę tokena. Póki co olewam.
 
 
+
+
+
 PROBLEM:
 Aby gracz mógł widzieć własny score musi mieć subskrypcję. Dzięki teemu może manipulować
 danymi z przeglądarki.
 
 SOLUTION:
 callback?
+
+
+
+
+PROBLEM:
+Program nie działa w Firefoxie.
+
+SOLUTION:
+Chrome i Opera i Edge działają wporządku.

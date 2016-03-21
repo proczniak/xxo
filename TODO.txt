@@ -1,10 +1,7 @@
 Sprzątanie po zakończonych grach i wylogowanych i uciekniętych juzkach.
-Logika gry:
 
-    alerty dzialaja nie do konca dobrze (warunki przy updacie komponentu?)
+Wyświetlanie Scores. (pieprzy się coś przy wyświetlaniu komponentu). Liczą się dobrze.
+
+Game status DRAW. i komunikaty do takiego zakończenia rozgrywki.
 
 Testy
-
-
-
-

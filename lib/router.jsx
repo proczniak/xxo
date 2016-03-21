@@ -1,5 +1,3 @@
-// console.log("User.jsx: Użytkownik: " + Meteor.user()._id);
-
 FlowRouter.route('/', {
   name: '/',
   subscriptions: function() {

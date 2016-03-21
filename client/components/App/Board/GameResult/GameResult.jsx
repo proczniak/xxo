@@ -3,7 +3,7 @@ GameResult = React.createClass({
   getMeteorData(){
 
     bD = Boards.findOne();
-    if (bD.player1 = Meteor.userId()) var opponent = bD.player2
+    if (bD.player1 == Meteor.userId()) var opponent = bD.player2
     else var opponent = bD.player1
 
     return {

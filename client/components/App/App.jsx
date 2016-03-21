@@ -1,7 +1,10 @@
 App = React.createClass({
 
+    /**
+     * Whole file snatched from ninjatracker. It's supposed to take care of making sure subs are ready.
+     */
   mixins: [ReactMeteorData],
-  getMeteorData(){ //assigns variables, objects (stuff) to this.props.data.property - (loggedIn)
+  getMeteorData(){
     return {
       loggedIn: !!Meteor.user()
     }
@@ -13,23 +16,10 @@ App = React.createClass({
     if ($.inArray(this.props.content.props.name, allowedLayouts) > -1 || this.data.loggedIn) {
       layoutAllowed = true;
     }
-    // layoutAllowed = true;
     return layoutAllowed;
   },
 
-  // componentWillMount(){
-  //   //console.log("ComponentWillMount: " + Meteor.user()._id);
-  //   console.log("componentWillMount userId: " + Meteor.userId());
-  //   //if(!!Meteor.userId()) Meteor.call('assignMeToTheBoard');
-  // },
-  //
-  // componentDidMount(){
-  //   //console.log("ComponentDidMount: " + Meteor.user()._id);
-  //   console.log("componentDidMount userId: " + Meteor.userId());
-  // },
-
   showLayout(){
-
     return (
       <div className="row">
         <div className="col-xs-3">
@@ -67,6 +57,4 @@ App = React.createClass({
       </div>
     )
   }
-
 });
-
