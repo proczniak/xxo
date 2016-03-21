@@ -2,9 +2,9 @@
 
 Available online at (http://sztos.roczniak.net:3000)
 
-## Install
-To install and run the game run following command:
+## To install and run execute following commands:
 ```
-curl https://raw.githubusercontent.com/proczniak/xxo/master/install.sh | sh
+git clone https://github.com/proczniak/xxo.git
+cd xxo
+meteor
 ```
-If you're lucky, (Mac ppl usualy are) you kshould be up and running in a few minutes.
