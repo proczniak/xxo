@@ -29,6 +29,10 @@ Board = React.createClass({
     Meteor.call('clearBoard');
   },
 
+  handleDestroyBoardClick: function (event) {
+    Meteor.call('destroyBoard');
+  },
+
   render() {
 
     if (this.data.moveToken === Meteor.userId()) var moveTokenMsg = "Twój ruch"
@@ -49,7 +53,9 @@ Board = React.createClass({
           <h4>Players: {Meteor.user().username}, {this.data.opponent}</h4>
           <h3>Grasz z użytkownikiem: {this.data.opponent}</h3>
           <h3>{moveTokenMsg}</h3>
+          <h4><GameResult /></h4>
           <input type="button" className="btn-wipe-board" onClick={this.handleClearBoardClick} value="Wipe the board"></input>
+          <input type="button" className="btn-wipe-board" onClick={this.handleDestroyBoardClick} value="Destroy the board"></input>
           <br />
           <br />
           <table className="tab-content">
@@ -95,7 +101,8 @@ Board = React.createClass({
 
     else {
       console.log('Board.jsx, Brak this.data.boardId');
-      return (<div>Just a minute...</div>)
+      return (<div>Someone must have picked the matrix. Please hit refresh to get back onboard.</div>)
+
     }
   }
 });

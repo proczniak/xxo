@@ -1,5 +1,5 @@
 Boards = new Mongo.Collection("boards");
-
+PlayerScores = new Mongo.Collection("scores");
 if (Meteor.isServer) {
   Meteor.methods({
 
@@ -7,8 +7,21 @@ if (Meteor.isServer) {
      * Very basic session (user - board) handling
      */
     assignMeToTheBoard: function () {
-      userid = Meteor.userId();
-      //console.log("assignMeToTheBoard invoked, userid: " + userid);
+      //  userid = Meteor.userId();
+
+      /**
+       * Check if the player has a score entry, if not, create it.
+       */
+      if (!PlayerScores.findOne({_id: Meteor.userId()})) {
+        console.log("no score, lets insert some data.");
+        PlayerScores.insert(
+          {
+            _id: Meteor.userId(),
+            score: 0
+          }
+        );
+      }
+
       /**
        * Check if player has a board already assigned.
        */
@@ -89,9 +102,9 @@ if (Meteor.isServer) {
 
     destroyBoard: function (boardId) {
       console.log("niszczę planszę.");
-      Boards.remove({_id: boardId})
+      Boards.remove({_id: Meteor.call('getPlayerBoardId')})
     },
-    
+
     clearBoard: function () {
       Boards.update(
         {_id: Meteor.call('getPlayerBoardId')},
@@ -104,7 +117,6 @@ if (Meteor.isServer) {
         }
       );
     },
-
 
     playerMove: function (field) {
 
@@ -176,9 +188,8 @@ if (Meteor.isServer) {
 
           ((bS.A1 === bS.B2 && bS.B2 === bS.C3) && !!bS.A1) ||
           ((bS.C1 === bS.B2 && bS.B2 === bS.A3) && !!bS.A3)
-        )
-        {
-          if(!bS.gameResult) {
+        ) {
+          if (!bS.gameResult) {
             Boards.update(
               {_id: boardId},
               {
@@ -204,6 +215,39 @@ if (Meteor.isServer) {
         return bS.gameResult
       };
 
+      playersScoreUpdate = function (gameResult) {
+        if (!!PlayerScores.findOne()) {
+          switch (gameResult) {
+            case "win":
+              PlayerScores.update(
+                {_id: Meteor.userId()},
+                {$inc: {score: 2}}
+              );
+              PlayerScores.update(
+                {_id: getGameData(boardId).opponentId},
+                {$inc: {score: -2}}
+              );
+              //console.log("playerScoreUpdate WIIIIIIN!. Lets. add and get 2 points each. " + Meteor.userId());
+              //console.log("player: " + getGameData(boardId).opponentId + "lost 2 points")
+              break;
+            case "draw":
+              PlayerScores.update(
+                {_id: Meteor.userId()},
+                {$inc: {score: 1}}
+              );
+              PlayerScores.update(
+                {_id: getGameData(boardId).opponentId},
+                {$inc: {score: 1}}
+              );
+              console.log("playerScoreUpdate DRAWWW!!!. Lets. add 1 point each");
+              break;
+            default:
+              console.log("Terrible error at playerMove, playersScoreUpdate. No can do. (unknown gameRsult status.)")
+          }
+          console.log("playerScoreUpdate, " + gameResult);
+        } else console.log("Terrible error at playerMove, playersScoreUpdate. No can do. (scores have not been created)")
+      };
+
       var boardId = Meteor.call('getPlayerBoardId');
 
       /**
@@ -223,18 +267,33 @@ if (Meteor.isServer) {
             }
           )
         }
-        // if (checkGameResult() == "draw") {
-        //       console.log("playerMove, we got a:  " + checkGameResult());
-        //
-        // } else if (checkGameResult() && checkGameResult() != "draw"){
-        //        console.log("playerMove, we got winner: " + checkGameResult())
-        // }
+
+        /**
+         * Lets update some scores.
+         */
+        if (checkGameResult() === Meteor.userId()) {
+          console.log("+2 pts. WIN!!!!!! - Score me up!: " + Meteor.userId());
+          console.log("-2 pts. LOST - fuck you!: " + getGameData(boardId).opponentId);
+          playersScoreUpdate("win");
+        } else if (checkGameResult() === "draw") {
+          playersScoreUpdate("draw");
+          console.log("+1 pts. DRAW: " + Meteor.userId() + ", " + getGameData(boardId).opponentId);
+        }
+
       }
-      console.log("move not allowed area, Result: " + checkGameResult());
+
+      console.log("move not allowed anymore. GameResult: " + checkGameResult());
+
       return checkGameResult();
     }
 
 
+  });
+
+  Meteor.publish("scores", function () {
+    return PlayerScores.find({
+      _id: this.userId
+    })
   });
 
   Meteor.publish("boards", function () {

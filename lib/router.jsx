@@ -1,9 +1,10 @@
 // console.log("User.jsx: Użytkownik: " + Meteor.user()._id);
 
 FlowRouter.route('/', {
-  name: 'Board',
+  name: '/',
   subscriptions: function() {
     this.register( 'boards', Meteor.subscribe( 'boards' ) );
+    this.register( 'scores', Meteor.subscribe( 'scores' ) );
   },
   action() {
     ReactLayout.render(App, {
@@ -17,6 +18,7 @@ FlowRouter.route('/Board', {
   name: 'Board',
   subscriptions: function() {
     this.register( 'boards', Meteor.subscribe( 'boards' ) );
+    this.register( 'scores', Meteor.subscribe( 'scores' ) );
   },
   action() {
     ReactLayout.render(App, {

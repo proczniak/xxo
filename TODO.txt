@@ -1,7 +1,10 @@
 Sprzątanie po zakończonych grach i wylogowanych i uciekniętych juzkach.
 Logika gry:
-	- blokowanie klikniętych pól (warunek w metodzie playerMove)
-	- komunikat o zakonczonej grze
-	- Punktacja.
+
+    alerty dzialaja nie do konca dobrze (warunki przy updacie komponentu?)
 
 Testy
+
+
+
+
