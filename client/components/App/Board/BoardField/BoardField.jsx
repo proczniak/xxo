@@ -16,11 +16,11 @@ BoardField = React.createClass({
             var fields2 = Object.keys(field).map(function (k) {
                 return field[k]
             });
+            if (!!fields2[1]) {
+                var field2 = fields2[0];
+            }
         }
 
-        if (!!fields2[1]) {
-            var field2 = fields2[0];
-        }
         return {
             fieldContent: field2
         }
