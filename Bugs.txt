@@ -25,4 +25,4 @@ PROBLEM:
 Program nie działa w Firefoxie.
 
 SOLUTION:
-Chrome i Opera i Edge działają wporządku.
+Chrome i Opera i Edge działają w porządku.
