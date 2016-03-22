@@ -50,7 +50,10 @@ App = React.createClass({
   render()
   {
     return (
-      <div className="container-fluid main-container">
+      <div className="container main-container">
+        <div className="page-header">
+          <h1>xxo - noughts & crosses</h1>
+        </div>
         <div className="row">
           {this.allowedLayout() ? this.showLayout() : this.showLogin()}
         </div>

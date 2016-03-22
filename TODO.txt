@@ -1,7 +1,11 @@
 Sprzątanie po zakończonych grach i wylogowanych i uciekniętych juzkach.
 
-Wyświetlanie Scores. (pieprzy się coś przy wyświetlaniu komponentu). Liczą się dobrze.
+Niech plansza czeka z rozpoczęciem rozgrywki na drugiego gracza.
 
 Game status DRAW. i komunikaty do takiego zakończenia rozgrywki.
 
 Testy
+
+Daniel chce kółko
+
+

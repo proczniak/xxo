@@ -26,6 +26,20 @@ FlowRouter.route('/Board', {
   }
 });
 
+FlowRouter.route('/Lobby', {
+  name: 'Lobby',
+  subscriptions: function() {
+    this.register( 'boards', Meteor.subscribe( 'boards' ) );
+    this.register( 'scores', Meteor.subscribe( 'scores' ) );
+  },
+  action() {
+    ReactLayout.render(App, {
+      content: <Lobby />,
+      dashboard: <Dashboard />
+    });
+  }
+});
+
 
 FlowRouter.route('/login', {
   name: 'Login',
