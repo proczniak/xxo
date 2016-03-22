@@ -1,11 +1,8 @@
-Sprzątanie po zakończonych grach i wylogowanych i uciekniętych juzkach.
+Sprzątanie po zakończonych grach i wylogowanych i uciekniętych juzkach. - nie psuje gry a wymaga zmiany
+całego flow. Póki co brak koncepcji jak to ma wyglądać.
 
 Niech plansza czeka z rozpoczęciem rozgrywki na drugiego gracza.
 
-Game status DRAW. i komunikaty do takiego zakończenia rozgrywki.
-
 Testy
-
-Daniel chce kółko
 
 

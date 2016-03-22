@@ -7,11 +7,23 @@ Board = React.createClass({
     var bD = Boards.findOne();
     /** bD stands for boardData */
 
+
+
     if (!!bD) {
+      if (!!bD.cross==true) {
+        if (bD.player1==Meteor.userId()) var myXo = "cross"
+        else var myXo = "nought"
+      } else {
+        if (bD.player1==Meteor.userId()) var myXo = "nought"
+        else var myXo = "cross"
+      }
+
+
       return {
         boardId: bD._id,
         opponent: this.getOpponentName(bD),
-        moveToken: bD.moveToken
+        moveToken: bD.moveToken,
+        myXo: myXo
 
       }
     }
@@ -63,52 +75,58 @@ Board = React.createClass({
             userId: <strong>{Meteor.userId()}</strong>
           </div>
           <div className="panel-body center-block">
-
-            <h4><MoveTokenMsg /></h4>
-            <h4><GameResult /></h4>
-            <div className="center-block">
-              <table className="tab-content">
-                <tbody>
-                <tr>
-                  <td id="A1">
-                    <BoardField fieldId="A1"/>
-                  </td>
-                  <td id="A2">
-                    <BoardField fieldId="A2"/>
-                  </td>
-                  <td id="A3">
-                    <BoardField fieldId="A3"/>
-                  </td>
-                </tr>
-                <tr>
-                  <td id="B1">
-                    <BoardField fieldId="B1"/>
-                  </td>
-                  <td id="B2">
-                    <BoardField fieldId="B2"/>
-                  </td>
-                  <td id="B3">
-                    <BoardField fieldId="B3"/>
-                  </td>
-                </tr>
-                <tr>
-                  <td id="C1">
-                    <BoardField fieldId="C1"/>
-                  </td>
-                  <td id="C2">
-                    <BoardField fieldId="C2"/>
-                  </td>
-                  <td id="C3">
-                    <BoardField fieldId="C3"/>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
+            <div className="row">
+              <div className="col-xs-6">
+                <h4><MoveTokenMsg /></h4>
+                <h4><GameResult /></h4>
+                <div className="center-block">
+                  <table className="tab-content">
+                    <tbody>
+                    <tr>
+                      <td id="A1">
+                        <BoardField fieldId="A1"/>
+                      </td>
+                      <td id="A2">
+                        <BoardField fieldId="A2"/>
+                      </td>
+                      <td id="A3">
+                        <BoardField fieldId="A3"/>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td id="B1">
+                        <BoardField fieldId="B1"/>
+                      </td>
+                      <td id="B2">
+                        <BoardField fieldId="B2"/>
+                      </td>
+                      <td id="B3">
+                        <BoardField fieldId="B3"/>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td id="C1">
+                        <BoardField fieldId="C1"/>
+                      </td>
+                      <td id="C2">
+                        <BoardField fieldId="C2"/>
+                      </td>
+                      <td id="C3">
+                        <BoardField fieldId="C3"/>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div className="col-xs-3">
+                Your pawn: <img src={"images/xxo." + this.data.myXo + ".png"} ></img>
+              </div>
             </div>
             <input type="button" className="btn-wipe-board center-block" onClick={this.handleClearBoardClick}
                    value="Wipe the board"></input>
             <input type="button" className="btn-wipe-board center-block" onClick={this.handleDestroyBoardClick}
-                   value="Do not click this button."></input>
+                   value="Destroy the board"></input>
           </div>
         </div>
       </div>
