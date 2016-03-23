@@ -123,9 +123,9 @@ Board = React.createClass({
                 Your pawn: <img src={"images/xxo." + this.data.myXo + ".png"} ></img>
               </div>
             </div>
-            <input type="button" className="btn-wipe-board center-block" onClick={this.handleClearBoardClick}
+            <input type="button" className="btn btn-primary btn-success" onClick={this.handleClearBoardClick}
                    value="Wipe the board"></input>
-            <input type="button" className="btn-wipe-board center-block" onClick={this.handleDestroyBoardClick}
+            <input type="button" className="btn btn-primary btn-danger" onClick={this.handleDestroyBoardClick}
                    value="Destroy the board"></input>
           </div>
         </div>

@@ -10,7 +10,8 @@ Dashboard = React.createClass({
       return {
         loggedIn: !!Meteor.user(),
         boardId: bD._id,
-        opponent: this.getOpponentName(bD)
+        opponentName: this.getOpponentData(bD).username,
+        opponentId: this.getOpponentData(bD).id
       }
     }
     else {
@@ -22,9 +23,18 @@ Dashboard = React.createClass({
     }
   },
 
-  getOpponentName: function (boardData) {
-    if (boardData.player1 === Meteor.userId()) return boardData.p2Name
-    else return boardData.p1Name
+  getOpponentData: function (boardData) {
+    if (boardData.player1 === Meteor.userId())
+      opponent = {
+        username: boardData.p2Name,
+        id: boardData.player2
+      }
+
+    else opponent = {
+      username: boardData.p1Name,
+      id: boardData.player1
+    }
+    return opponent
   },
 
   render() {
@@ -36,9 +46,7 @@ Dashboard = React.createClass({
         <div className="panel-body">
           <User />
           <Score />
-        </div>
-        <div className="panel-body">
-          rozgrywka z: {this.data.opponent}
+          <Opponent opponentName={this.data.opponentName} opponentId={this.data.opponentId}/>
         </div>
       </div>
     )

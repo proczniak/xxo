@@ -16,6 +16,7 @@ if (Meteor.isServer) {
         PlayerScores.insert(
           {
             _id: Meteor.userId(),
+            username: Meteor.user().username,
             score: 0
           }
         );
@@ -183,9 +184,17 @@ if (Meteor.isServer) {
 
       getGameData = function (boardId) {
         var boardData = Boards.findOne({_id: boardId});
-        if (boardData.player1 === Meteor.userId()) opId = boardData.player2
-        else opId = boardData.player1
+        if (boardData.player1 === Meteor.userId()) {
+          opId = boardData.player2,
+            opName = boardData.p2Name
+        }
+        else {
+          opId = boardData.player1,
+            opName = boardData.p1Name
+
+        }
         return ({
+          opponenName: opName,
           opponentId: opId,
           playerWithMoveToken: boardData.moveToken
         })
@@ -281,7 +290,8 @@ if (Meteor.isServer) {
        * Check if move allowed (field empty and token on player side) then
        * make the move
        */
-      if (!getFieldContent(field) && Meteor.userId() === getGameData(boardId).playerWithMoveToken) {
+      if ((!getFieldContent(field) && Meteor.userId() === getGameData(boardId).playerWithMoveToken) &&
+        getGameData(boardId).opponentId) {
         if (!checkGameResult()) {
           Boards.update(
             {_id: boardId},
@@ -307,9 +317,15 @@ if (Meteor.isServer) {
     }
   });
 
+  // Meteor.publish("topten", function () {
+  //   return PlayerScores.find({}, {limit: 3})
+  // });
+
   Meteor.publish("scores", function () {
     return PlayerScores.find({
-      _id: this.userId
+ //_id: this.userId
+    },{
+      
     })
   });
 

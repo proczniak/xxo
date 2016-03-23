@@ -1,13 +1,6 @@
- PROBLEM:
- Jeśli gracz wejdzie na planszę i kliknie w pole zanim drugi gracz zdąży się podłączyć
- Obaj gracze pozostaną bez tokena ruchu. Trochę słabo bo żaden nie może kliknąć w pole.
- Na chwilę obecną - jedyne wyjście to zniszczyć planszę. (czerwony guzik)
-
- SOLUTION:
- Albo zmienić gameplay tak by czekać z rozpoczęciem rozgrywki na drugiego gracza, albo
- dodać kilka pokracznych warunków na obsługę tokena. Póki co olewam.
-
-
+PROBLEM:
+po zakończeniu rozgrywki przeciwnik oprócz komunikatu o wyniku dostaje 2 powiadomienia
+o wykonanym przez nas ruchu.
 
 
 
@@ -15,8 +8,10 @@ PROBLEM:
 Aby gracz mógł widzieć własny score musi mieć subskrypcję. Dzięki teemu może manipulować
 danymi z przeglądarki.
 
+
 SOLUTION:
 callback?
+Publish z kontrolą dostępu?
 
 
 

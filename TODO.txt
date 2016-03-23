@@ -1,7 +1,6 @@
 Sprzątanie po zakończonych grach i wylogowanych i uciekniętych juzkach. - nie psuje gry a wymaga zmiany
 całego flow. Póki co brak koncepcji jak to ma wyglądać.
 
-Niech plansza czeka z rozpoczęciem rozgrywki na drugiego gracza.
 
 Testy
 

@@ -4,20 +4,20 @@ Lobby = React.createClass({
       <div>
         <div className="panel panel-default">
           <div className="panel-heading">
-            <h2>Lobby</h2>
+            Lobby <small>Maybe someday...</small>
           </div>
           <div className="panel-body">
-            <ul>
-              <li> juzek 1 </li>
-              <li> juzek 1 </li>
-              <li> juzek 1 </li>
-              <li> juzek 1 </li>
-              <li> juzek 1 </li>
-              <li> juzek 1 </li>
-              <li> juzek 1 </li>
-              <li> juzek 1 </li>
-              
-            </ul>
+            <dl className="dl-horizontal">
+              <dt> juzek 1<dd>Some pretty info...</dd> </dt>
+              <dt> juzek 1<dd>Some pretty info...</dd> </dt>
+              <dt> juzek 1<dd>Some pretty info...</dd> </dt>
+              <dt> juzek 1<dd>Some pretty info...</dd> </dt>
+              <dt> juzek 1<dd>Some pretty info...</dd> </dt>
+              <dt> juzek 1<dd>Some pretty info...</dd> </dt>
+              <dt> juzek 1<dd>Some pretty info...</dd> </dt>
+              <dt> juzek 1<dd>Some pretty info...</dd> </dt>
+
+            </dl>
           </div>
         </div>
       </div>
