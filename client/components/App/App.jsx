@@ -21,11 +21,11 @@ App = React.createClass({
 
   showLayout(){
     return (
-      <div className="row">
-        <div className="col-xs-3">
+      <div>
+        <div className="col-lg-3">
           {this.props.dashboard}
         </div>
-        <div className="col-xs-9">
+        <div className="col-lg-9">
           {this.props.content}
         </div>
       </div>
@@ -39,7 +39,7 @@ App = React.createClass({
           <p>You must be logged in to do that.</p>
         </div>
         <div className="row">
-          <div className="col-xs-12 col-xs-offset-3">
+          <div className="col-xs-12">
             <Login />
           </div>
         </div>
@@ -50,9 +50,9 @@ App = React.createClass({
   render()
   {
     return (
-      <div className="container main-container">
+      <div className="container container-fluid">
         <div className="page-header">
-          <h1>xxo - noughts & crosses</h1>
+          <h1>xxo <small>noughts & crosses</small></h1>
         </div>
         <div className="row">
           {this.allowedLayout() ? this.showLayout() : this.showLogin()}

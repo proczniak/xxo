@@ -67,20 +67,20 @@ Board = React.createClass({
       return (<div>Someone must have picked the matrix. Please refresh to get back onboard.</div>)
     }
     return (
-      <div className="row">
+      <div>
 
         <div className="panel panel-default">
           <div className="panel-heading">
             boardId: <strong>{this.data.boardId}</strong>,
             userId: <strong>{Meteor.userId()}</strong>
           </div>
-          <div className="panel-body center-block">
-            <div className="row">
-              <div className="col-xs-6">
+          <div className="panel-body">
+            <div>
+              <div className="col-sm-6">
                 <h4><MoveTokenMsg /></h4>
                 <h4><GameResult /></h4>
-                <div className="center-block">
-                  <table className="tab-content">
+                <div className="container-fluid">
+                  <table>
                     <tbody>
                     <tr>
                       <td id="A1">
@@ -119,7 +119,7 @@ Board = React.createClass({
                   </table>
                 </div>
               </div>
-              <div className="col-xs-3">
+              <div className="col-sm-6">
                 Your pawn: <img src={"images/xxo." + this.data.myXo + ".png"} ></img>
               </div>
             </div>
