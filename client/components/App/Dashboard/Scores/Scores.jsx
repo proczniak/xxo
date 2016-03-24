@@ -1,4 +1,4 @@
-Score = React.createClass({
+Scores = React.createClass({
 
   mixins: [ReactMeteorData],
   getMeteorData(){

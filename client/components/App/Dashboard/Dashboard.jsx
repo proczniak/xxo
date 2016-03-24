@@ -47,16 +47,16 @@ Dashboard = React.createClass({
 
   render() {
     return (
-      <div className="panel panel-default">
+      <div className="panel panel-default panel-primary">
         <div className="panel-heading">
           Dashboard
         </div>
         <div className="panel-body text-center">
           <User />
-          <Score />
+          <Scores />
           <Opponent opponentName={this.data.opponentName} opponentId={this.data.opponentId}/>
 
-          <div className="panel panel-default">
+          <div className="panel panel-info">
           <div className="panel-heading">Your pawn:</div>
           <div className="panel-body">
             <img src={"images/xxo." + this.data.myXo + ".png"}></img>

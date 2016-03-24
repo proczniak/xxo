@@ -67,18 +67,18 @@ Board = React.createClass({
     return (
       <div>
 
-        <div className="panel panel-default">
+        <div className="panel panel-default panel-primary">
           <div className="panel-heading">
             boardId: <strong>{this.data.boardId}</strong>,
             userId: <strong>{Meteor.userId()}</strong>
           </div>
           <div className="panel-body text-center">
             <div className="text-center">
-              <h4><MoveTokenMsg /></h4>
+              <div className="panel-info"><MoveTokenMsg /></div>
               <h4><GameResult /></h4>
               <div className="row text-center">
-                <div className="col-sm-5 text-center" >
-                  <table className="center-block text-center">
+                <div className="col-sm-5 text-center">
+                  <table className="center-table">
                     <tbody>
                     <tr>
                       <td id="A1">
