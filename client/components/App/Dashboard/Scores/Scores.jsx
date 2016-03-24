@@ -31,7 +31,7 @@ Scores = React.createClass({
         <div className="panel-body">
           <div className="row">
             <div className="panel panel-default">
-              <div className="panel panel-heading" data-toggle="collapse" data-target="#scores">
+              <div className="btn btn-block panel panel-heading" data-toggle="collapse" data-target="#scores">
                  High scores
               </div>
               <div id="scores" className="collapse">

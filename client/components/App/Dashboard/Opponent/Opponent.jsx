@@ -14,12 +14,14 @@ Opponent = React.createClass({
   render() {
     return (
       <div className="panel-group">
-        <div className="panel-body">
-          <button className="btn btn-default btn-block" data-toggle="collapse" data-target="#opponent">
+        <div className="panel panel-default">
+          <div className="btn btn-block panel panel-heading" data-toggle="collapse" data-target="#opponent">
             Opponent: {this.props.opponentName}
-          </button>
-          <div id="opponent" className="collapse">
-            Opponent's score: {this.data.opponentScore}
+          </div>
+          <div id="opponent" className="panel panel-body collapse">
+            <div className="panel panel-body">
+              Opponent's score: {this.data.opponentScore}
+            </div>
           </div>
         </div>
       </div>
