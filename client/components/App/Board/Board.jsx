@@ -8,13 +8,12 @@ Board = React.createClass({
     /** bD stands for boardData */
 
 
-
     if (!!bD) {
-      if (!!bD.cross==true) {
-        if (bD.player1==Meteor.userId()) var myXo = "cross"
+      if (!!bD.cross == true) {
+        if (bD.player1 == Meteor.userId()) var myXo = "cross"
         else var myXo = "nought"
       } else {
-        if (bD.player1==Meteor.userId()) var myXo = "nought"
+        if (bD.player1 == Meteor.userId()) var myXo = "nought"
         else var myXo = "cross"
       }
 
@@ -35,7 +34,6 @@ Board = React.createClass({
       }
     }
   },
-
 
   getOpponentName: function (boardData) {
     if (boardData.player1 === Meteor.userId()) return boardData.p2Name
@@ -74,13 +72,13 @@ Board = React.createClass({
             boardId: <strong>{this.data.boardId}</strong>,
             userId: <strong>{Meteor.userId()}</strong>
           </div>
-          <div className="panel-body">
-            <div>
-              <div className="col-sm-6">
-                <h4><MoveTokenMsg /></h4>
-                <h4><GameResult /></h4>
-                <div className="container-fluid">
-                  <table>
+          <div className="panel-body text-center">
+            <div className="text-center">
+              <h4><MoveTokenMsg /></h4>
+              <h4><GameResult /></h4>
+              <div className="row text-center">
+                <div className="col-sm-5 text-center" >
+                  <table className="center-block text-center">
                     <tbody>
                     <tr>
                       <td id="A1">
@@ -118,15 +116,17 @@ Board = React.createClass({
                     </tbody>
                   </table>
                 </div>
-              </div>
-              <div className="col-sm-6">
-                Your pawn: <img src={"images/xxo." + this.data.myXo + ".png"} ></img>
+                <div className="col-sm-2"></div>
+                <div className="col-sm-5 centered">
+                  <input type="button" className="btn btn-primary btn-info btn-block"
+                         onClick={this.handleClearBoardClick}
+                         value="Wipe the board"></input>
+                  <input type="button" className="btn btn-primary btn-warning btn-block"
+                         onClick={this.handleDestroyBoardClick}
+                         value="Destroy the board"></input>
+                </div>
               </div>
             </div>
-            <input type="button" className="btn btn-primary btn-success" onClick={this.handleClearBoardClick}
-                   value="Wipe the board"></input>
-            <input type="button" className="btn btn-primary btn-danger" onClick={this.handleDestroyBoardClick}
-                   value="Destroy the board"></input>
           </div>
         </div>
       </div>

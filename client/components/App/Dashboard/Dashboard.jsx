@@ -1,13 +1,21 @@
 Dashboard = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData(){
-
-    // Meteor.call('assignMeToTheBoard');
     var bD = Boards.findOne();
     /** bD stands for boardData */
 
     if (!!bD) {
+      if (!!bD.cross == true) {
+        if (bD.player1 == Meteor.userId()) var myXo = "cross"
+        else var myXo = "nought"
+      } else {
+        if (bD.player1 == Meteor.userId()) var myXo = "nought"
+        else var myXo = "cross"
+      }
+    }
+    if (!!bD) {
       return {
+        myXo: myXo,
         loggedIn: !!Meteor.user(),
         boardId: bD._id,
         opponentName: this.getOpponentData(bD).username,
@@ -43,12 +51,20 @@ Dashboard = React.createClass({
         <div className="panel-heading">
           Dashboard
         </div>
-        <div className="panel-body">
+        <div className="panel-body text-center">
           <User />
           <Score />
           <Opponent opponentName={this.data.opponentName} opponentId={this.data.opponentId}/>
+
+          <div className="panel panel-default">
+          <div className="panel-heading">Your pawn:</div>
+          <div className="panel-body">
+            <img src={"images/xxo." + this.data.myXo + ".png"}></img>
+          </div>
         </div>
+
       </div>
-    )
+  </div>
+  )
   }
 });

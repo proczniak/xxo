@@ -29,18 +29,21 @@ Score = React.createClass({
     return (
       <div className="panel-group">
         <div className="panel-body">
-          <button className="btn btn-default btn-block" data-toggle="collapse" data-target="#scores">
-            Score: {this.data.playerScore}
-          </button>
           <div className="row">
-            <div id="scores" className="collapse">
-              <div className="panel panel-default">
-                <div className="panel panel-heading">High schores</div>
-                <div className="panel panel-body">
-                  <ol>
+            <div className="panel panel-default">
+              <div className="panel panel-heading" data-toggle="collapse" data-target="#scores">
+                 High scores
+              </div>
+              <div id="scores" className="collapse">
+                <div className="panel panel-body text-left text-uppercase">
+                  <ol className="list-group">
+                    <li className="list-group-item list-group-item-info">
+                      MyScore: <span className="badge">{this.data.playerScore}</span>
+                      </li>
                     {
                       this.data.topTenPlayers.map(function (player) {
-                        return <li key={player.username}>{player.username} {player.score}</li>
+                        return <li className="list-group-item" key={player.username}>{player.username}
+                          <span className="badge ">{player.score}</span></li>
                       })
                     }
                   </ol>
