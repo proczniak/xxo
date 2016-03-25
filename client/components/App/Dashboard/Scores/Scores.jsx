@@ -27,7 +27,6 @@ Scores = React.createClass({
 
   render() {
     return (
-      <div className="panel-group">
         <div className="panel-body">
           <div className="row">
             <div className="panel panel-default">
@@ -52,7 +51,6 @@ Scores = React.createClass({
             </div>
           </div>
         </div>
-      </div>
     )
   }
 });

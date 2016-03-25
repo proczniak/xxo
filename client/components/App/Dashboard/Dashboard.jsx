@@ -52,19 +52,19 @@ Dashboard = React.createClass({
           Dashboard
         </div>
         <div className="panel-body text-center">
-          <User />
-          <Scores />
-          <Opponent opponentName={this.data.opponentName} opponentId={this.data.opponentId}/>
-
+          <div className="panel panel-group">
+            <User />
+            <Scores />
+            <Opponent opponentName={this.data.opponentName} opponentId={this.data.opponentId}/>
+          </div>
           <div className="panel panel-info">
-          <div className="panel-heading">Your pawn:</div>
-          <div className="panel-body">
-            <img src={"images/xxo." + this.data.myXo + ".png"}></img>
+            <div className="panel-heading">Your pawn:</div>
+            <div className="panel-body">
+              <img src={"images/xxo." + this.data.myXo + ".png"}></img>
+            </div>
           </div>
         </div>
-
       </div>
-  </div>
-  )
+    )
   }
 });
