@@ -36,7 +36,7 @@ Scores = React.createClass({
               <div id="scores" className="collapse">
                 <div className="panel panel-body text-left text-uppercase">
                   <ol className="list-group">
-                    <li className="list-group-item list-group-item-info">
+                    <li className="list-group-item list-group-item-info" id="#myscore">
                       MyScore: <span className="badge">{this.data.playerScore}</span>
                       </li>
                     {

@@ -1,6 +1,7 @@
 module.exports = function () {
   'use strict';
 
+
   this.Given(/^I am on the site$/, function () {
     browser.url('http://localhost:3000/');
     if (client.isExisting('a[id="login-name-link"]')) {
@@ -31,7 +32,6 @@ module.exports = function () {
     browser.waitForExist('a[id="login-name-link"]');
   });
 };
-
 
 
 
